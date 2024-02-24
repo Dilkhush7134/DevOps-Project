@@ -1,1 +1,20 @@
-
+---
+- name: Installing nginx
+  hosts: web
+  become: yes
+  tasks:
+    - name: Executing Script on Remote server
+      script: /root/Ansible/myscript.sh
+      become: yes
+    - name: Copying the output on Local sysytem
+      fetch:
+        src: /tmp/output.txt
+        dest: /root/Ansible/log/k8worker-2/output.txt
+        flat: yes
+      delegate_to: 192.168.1.4
+    - name: Copying the output on Local sysytem
+      fetch:
+        src: /tmp/output.txt
+        dest: /root/Ansible/log/Docker/output.txt
+        flat: yes
+      delegate_to: 192.168.1.11
